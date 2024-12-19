@@ -81,17 +81,14 @@ public class VoitureController {
     @GetMapping("/client/{id}")
     public ResponseEntity<List<Voiture>> findByClient(@PathVariable Long id) {
         try {
-            Client client = clientService.getClientById(id);
-            if (client != null) {
-                List<Voiture> voitures = voitureRepository.findAll(); // Ajoutez ici un filtre par client si nécessaire
-                return ResponseEntity.ok(voitures);
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
+            List<Voiture> voitures = voitureRepository.findByIdClient(id); // Utilisation de la méthode filtrée
+            return ResponseEntity.ok(voitures);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(null);
         }
     }
+
 
     // Ajouter une nouvelle voiture
 
